@@ -1,0 +1,188 @@
+---
+title: "Data 607 Homework 2"
+author: "Josef Waples"
+date: "9/4/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Survey, include=FALSE}
+```
+
+
+This project will make use of survey data from SurveyMonkey, an SQL relational database, and an R notebook.
+
+Our goal is to collect survey response data concerning opinions on different Brad Pitt movies. We will compare our results to the IMDB database critic ranking of the same movies in order to see whether or not our classmates or the professional movie critics are bigger fans of Brad Pitt. 
+
+Our SurveyMonkey survey concerns the following movies. These six movies were randomly selected from a list of Brad Pitt movies found on Wikipedia at the following link: https://en.wikipedia.org/wiki/Brad_Pitt_filmography
+The following movies were selected because for some reason I can't remember I recently had a conversation about Brad Pitt, who is in my opinion a good actor. 
+
+A River Runs Through It (1992)
+Moneyball (2011)
+Ad Astra (2019)
+World War Z (2013)
+The Curious Case of Benjamin Button (2008)
+Spy Game (2001)
+
+The survey is available on SurveyMonkey at the following link. 
+https://www.surveymonkey.com/r/65KXG9V
+
+The survey scored these movies on a simple scale of 1 (not good) to 5 (extremely good) I specified that a sixth answer "I did not see this movie" in case the respondent had not seen this movie. 
+
+Here is a section of SQL code in order to retrieve the surveymonkey data from the SQL database. 
+Full disclosure - The data came out in a nested / web format that I don't think was exactly SQL format ... so I"m not 100% certain if this would be reproducible. 
+
+Here is a section of SQL code in order to retrieve the surveymonkey data from the SQL database.
+Full disclosure - The data came out in a nested / web format that I don't think was exactly SQL format ... so I"m not 100% certain if this would be reproducible.
+
+{r SQL}
+
+CREATE TABLE data
+(id INT NOT NULL AUTO_INCREMENT,
+A_River_Runs_Through_It VARCHAR(255) NOT NULL,
+Moneyball VARCHAR(255) NOT NULL,
+Ad_Astra VARCHAR(255) NOT NULL,
+World_War_Z VARCHAR(255) NOT NULL,
+The_Curious_Case_of_Benjamin_Button VARCHAR(255) NOT NULL,
+Spy_Game INT NOT NULL,
+PRIMARY KEY (id));
+LOAD DATA LOCAL INFILE 'C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\moviedata.csv'
+INTO TABLE data FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n' IGNORE 1 ROWS
+(id, A_River_Runs_Through_It, Moneyball, Ad_Astra, World_War_Z, The_Curious_Case_of_Benjamin_Button, Spy_Game);
+
+{r SQL meets R, echo=FALSE}
+
+library(RMySQL)
+
+connection <- dbConnect(MySQL(), user='root', password='password', dbname='movies', host='lo
+calhost')
+connection
+MySQLConnection:0,0
+
+moviequery <- dbSendQuery(con, "SELECT * FROM data")
+dbFetch(moviequery)
+
+moviequery <- dbSendQuery(con, "SELECT * FROM data")
+Class_Movie_Survey <- dbFetch(moviequery)
+
+
+
+```{r R - Tidying up the data, echo=TRUE}
+
+# Class_Movie_Survey <- read.table(file = ~/Downloads/Class_Movie_Survey.xlsx, sep = "\t", header=TRUE)
+library(readxl)
+
+Class_Movie_Survey <- read_excel("~/Downloads/Class_Movie_Survey.xlsx")
+
+#taking a look at the data
+head(Class_Movie_Survey)
+tail(Class_Movie_Survey)
+
+length(Class_Movie_Survey) # 9 variables
+nrow(Class_Movie_Survey) # 6 rows (which equals 6 respondents)
+
+
+str(Class_Movie_Survey) # looking at the structure, we see all variables are character types
+# i think this is because the titles of the movies (header column) didn't have underscores
+
+Class_Movie_Survey$`A River Runs Throught It` <- as.numeric(Class_Movie_Survey$`A River Runs Throught It`)
+Class_Movie_Survey$Moneyball <- as.numeric(Class_Movie_Survey$Moneyball)
+Class_Movie_Survey$`Ad Astra` <- as.numeric(Class_Movie_Survey$`Ad Astra`)
+Class_Movie_Survey$`World War Z` <- as.numeric(Class_Movie_Survey$`World War Z`)
+Class_Movie_Survey$`The Curious Case of Benjamin Button` <- as.numeric(Class_Movie_Survey$`The Curious Case of Benjamin Button`)
+Class_Movie_Survey$`Spy Game` <- as.numeric(Class_Movie_Survey$`Spy Game`)
+
+# I am able to force coreciion the types to numeric
+
+# are there any missing values here?
+any(is.na(Class_Movie_Survey)) # TRUE
+# OK I see that the "I didn't see this movie" can turned into an NA value
+
+# how many NA values are there?
+sum(is.na(Class_Movie_Survey)) # there are 14 NA values
+
+# create a new column that is the sum of the NAs for each respondent
+Class_Movie_Survey$total_na_count_respondent <- apply(Class_Movie_Survey, 1, function(x) sum(is.na(x)))
+
+
+# Find the average survey score for each movie remembering to remove NA / "I haven't seen this movie" values before creating an average 
+
+Average_Score_A_River_Runs_Throught_It <- sum(Class_Movie_Survey$`A River Runs Throught It`,na.rm=TRUE) / (nrow(Class_Movie_Survey) - sum(is.na(Class_Movie_Survey$`A River Runs Throught It`)))
+
+Average_Score_Moneyball <- sum(Class_Movie_Survey$Moneyball,na.rm=TRUE ) / (nrow(Class_Movie_Survey) - sum(is.na(Class_Movie_Survey$Moneyball)))
+
+Average_Score_Ad_Astra <- sum(Class_Movie_Survey$`Ad Astra`,na.rm=TRUE) / (nrow(Class_Movie_Survey) - sum(is.na(Class_Movie_Survey$`Ad Astra`)))
+
+Average_Score_World_War_Z <- sum(Class_Movie_Survey$`World War Z`,na.rm=TRUE) / (nrow(Class_Movie_Survey) - sum(is.na(Class_Movie_Survey$`World War Z`)))
+
+Average_Score_The_Curious_Case_of_Benjamin_Button <- sum(Class_Movie_Survey$`The Curious Case of Benjamin Button`,na.rm=TRUE) / (nrow(Class_Movie_Survey) - sum(is.na(Class_Movie_Survey$`The Curious Case of Benjamin Button`)))
+
+Average_Score_Spy_Game <- sum(Class_Movie_Survey$`Spy Game`,na.rm=TRUE) / (nrow(Class_Movie_Survey) - sum(is.na(Class_Movie_Survey$`Spy Game`)))
+
+# Create a data frame for our movies + survey scores
+SurveyScoreDateFrame <- data.frame("Movies" = c("A River Runs Throught It", "Moneyball", "Ad Astra", "World War Z", "Benjamin Button", "Spy Game"), "Average Survey Score" = c(Average_Score_A_River_Runs_Throught_It, Average_Score_Moneyball, Average_Score_Ad_Astra, Average_Score_World_War_Z, Average_Score_The_Curious_Case_of_Benjamin_Button, Average_Score_Spy_Game))
+                          
+# Find the IMDB score for each movie (using google searches and creating variables)
+IMDB_Score_A_River_Runs_Throught_It <- 7.2
+IMDB_Score_Moneyball <- 7.6
+IMDB_Score_Ad_Astra <- 6.6
+IMDB_Score_World_War_Z <- 7
+IMDB_Score_The_Curious_Case_of_Benjamin_Button <- 7.8
+IMDB_Score_Spy_Game <- 7.1
+
+
+# Divide each IMDB score by 2 because we scored our movies on a 5-point scale
+IMDB_Score_A_River_Runs_Throught_It <- IMDB_Score_A_River_Runs_Throught_It / 2
+IMDB_Score_Moneyball <- IMDB_Score_Moneyball / 2
+IMDB_Score_Ad_Astra <- IMDB_Score_Ad_Astra / 2
+IMDB_Score_World_War_Z <- IMDB_Score_World_War_Z / 2
+IMDB_Score_The_Curious_Case_of_Benjamin_Button <- IMDB_Score_The_Curious_Case_of_Benjamin_Button / 2
+IMDB_Score_Spy_Game <- IMDB_Score_Spy_Game / 2
+
+
+# Create a vecotr of IMDB Scores
+IMDB_Scores_Vector <- c(IMDB_Score_A_River_Runs_Throught_It, IMDB_Score_Moneyball, IMDB_Score_Ad_Astra, IMDB_Score_World_War_Z, IMDB_Score_The_Curious_Case_of_Benjamin_Button, IMDB_Score_Spy_Game)
+                          
+SurveyScoreDateFrame$IMDB_Scores <- IMDB_Scores_Vector
+
+# in order to graph we need a long data frame instead of a wide one
+
+library(tidyr)
+
+long_data_SurveyScoreDateFrame <- gather(SurveyScoreDateFrame, SurveyScoreDateFrame.Average.Survey.Score, IMDB_Scores, -Movies)
+
+colnames(long_data_SurveyScoreDateFrame) <- c("Movies", "Measure", "Score")
+
+
+```
+
+```{r R - Visualizing, echo=TRUE}
+
+library(ggplot2)
+
+ggplot(data =  long_data_SurveyScoreDateFrame, aes(x = Movies, y = Score, color = Measure)) + 
+  geom_point() +
+  labs(title="Brad Pitt Movies", subtitle = "Survey vs. IMDB Scores") +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold")) +
+  theme(plot.subtitle = element_text(hjust = 0.5)) +
+  labs(caption = "Week 2 Assignment") +
+  xlab("Movie Titles") +
+  # scale_colour_manual(values = c(Average.Survey.Score = 'turquoise',
+  #                                  IMDB_Scores = 'tan1')) +
+  scale_color_manual(values=c("#999999", "#E69F00"), 
+                       name="Source",
+                       labels=c("Survey", "IMDB"))
+  ylab("Score")
+  # scale_y_discrete(limits=c("1","2","3", "4", "5"))
+
+```
+
+
+My conclusion here is that the class survey graders are either more generous graders of movies in generally, or else our class is made up of bigger fans of Brad Pitt than our movie critics. 
+
