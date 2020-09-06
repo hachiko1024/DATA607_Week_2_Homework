@@ -1,0 +1,451 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={Data 607 Homework 2},
+            pdfauthor={Josef Waples},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{Data 607 Homework 2}
+\author{Josef Waples}
+\date{9/4/2020}
+
+\begin{document}
+\maketitle
+
+This project will make use of survey data from SurveyMonkey, an SQL
+relational database, and an R notebook.
+
+Our goal is to collect survey response data concerning opinions on
+different Brad Pitt movies. We will compare our results to the IMDB
+database critic ranking of the same movies in order to see whether or
+not our classmates or the professional movie critics are bigger fans of
+Brad Pitt.
+
+Our SurveyMonkey survey concerns the following movies. These six movies
+were randomly selected from a list of Brad Pitt movies found on
+Wikipedia at the following link:
+\url{https://en.wikipedia.org/wiki/Brad_Pitt_filmography} The following
+movies were selected because for some reason I can't remember I recently
+had a conversation about Brad Pitt, who is in my opinion a good actor.
+
+A River Runs Through It (1992) Moneyball (2011) Ad Astra (2019) World
+War Z (2013) The Curious Case of Benjamin Button (2008) Spy Game (2001)
+
+The survey is available on SurveyMonkey at the following link.
+\url{https://www.surveymonkey.com/r/65KXG9V}
+
+The survey scored these movies on a simple scale of 1 (not good) to 5
+(extremely good) I specified that a sixth answer ``I did not see this
+movie'' in case the respondent had not seen this movie.
+
+Here is a section of SQL code in order to retrieve the surveymonkey data
+from the SQL database. Full disclosure - The data came out in a nested /
+web format that I don't think was exactly SQL format \ldots{} so I"m not
+100\% certain if this would be reproducible.
+
+Here is a section of SQL code in order to retrieve the surveymonkey data
+from the SQL database. Full disclosure - The data came out in a nested /
+web format that I don't think was exactly SQL format \ldots{} so I"m not
+100\% certain if this would be reproducible.
+
+\{r SQL\}
+
+CREATE TABLE data (id INT NOT NULL AUTO\_INCREMENT,
+A\_River\_Runs\_Through\_It VARCHAR(255) NOT NULL, Moneyball
+VARCHAR(255) NOT NULL, Ad\_Astra VARCHAR(255) NOT NULL, World\_War\_Z
+VARCHAR(255) NOT NULL, The\_Curious\_Case\_of\_Benjamin\_Button
+VARCHAR(255) NOT NULL, Spy\_Game INT NOT NULL, PRIMARY KEY (id)); LOAD
+DATA LOCAL INFILE `C:\ProgramData\MySQL\MySQL Server
+8.0\Uploads\moviedata.csv' INTO TABLE data FIELDS TERMINATED BY `,'
+LINES TERMINATED BY `\n' IGNORE 1 ROWS (id, A\_River\_Runs\_Through\_It,
+Moneyball, Ad\_Astra, World\_War\_Z,
+The\_Curious\_Case\_of\_Benjamin\_Button, Spy\_Game);
+
+\{r SQL meets R, echo=FALSE\}
+
+library(RMySQL)
+
+connection \textless{}- dbConnect(MySQL(), user=`root',
+password=`password', dbname=`movies', host=`lo calhost') connection
+MySQLConnection:0,0
+
+moviequery \textless{}- dbSendQuery(con, ``SELECT * FROM data'')
+dbFetch(moviequery)
+
+moviequery \textless{}- dbSendQuery(con, ``SELECT * FROM data'')
+Class\_Movie\_Survey \textless{}- dbFetch(moviequery)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Class_Movie_Survey <- read.table(file = ~/Downloads/Class_Movie_Survey.xlsx, sep = "\textbackslash{}t", header=TRUE)}
+\KeywordTok{library}\NormalTok{(readxl)}
+
+\NormalTok{Class_Movie_Survey <-}\StringTok{ }\KeywordTok{read_excel}\NormalTok{(}\StringTok{"~/Downloads/Class_Movie_Survey.xlsx"}\NormalTok{)}
+
+\CommentTok{#taking a look at the data}
+\KeywordTok{head}\NormalTok{(Class_Movie_Survey)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 9
+##   `What is your n~ `What is your g~ `What is your a~ `A River Runs T~ Moneyball
+##   <chr>            <chr>            <chr>            <chr>            <chr>    
+## 1 LeTicia          Female           25-34            I haven't seen ~ 3        
+## 2 Dan              Male             25-34            I haven't seen ~ 4        
+## 3 Magnus           Male             25-34            3                5        
+## 4 Omar             Male             25-34            I haven't seen ~ 4        
+## 5 Josef            Male             25-34            5                I haven'~
+## 6 Bharani          Male             25-34            3                I haven'~
+## # ... with 4 more variables: `Ad Astra` <chr>, `World War Z` <chr>, `The
+## #   Curious Case of Benjamin Button` <chr>, `Spy Game` <chr>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tail}\NormalTok{(Class_Movie_Survey)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 9
+##   `What is your n~ `What is your g~ `What is your a~ `A River Runs T~ Moneyball
+##   <chr>            <chr>            <chr>            <chr>            <chr>    
+## 1 LeTicia          Female           25-34            I haven't seen ~ 3        
+## 2 Dan              Male             25-34            I haven't seen ~ 4        
+## 3 Magnus           Male             25-34            3                5        
+## 4 Omar             Male             25-34            I haven't seen ~ 4        
+## 5 Josef            Male             25-34            5                I haven'~
+## 6 Bharani          Male             25-34            3                I haven'~
+## # ... with 4 more variables: `Ad Astra` <chr>, `World War Z` <chr>, `The
+## #   Curious Case of Benjamin Button` <chr>, `Spy Game` <chr>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(Class_Movie_Survey) }\CommentTok{# 9 variables}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{nrow}\NormalTok{(Class_Movie_Survey) }\CommentTok{# 6 rows (which equals 6 respondents)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(Class_Movie_Survey) }\CommentTok{# looking at the structure, we see all variables are character types}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## tibble [6 x 9] (S3: tbl_df/tbl/data.frame)
+##  $ What is your name?                 : chr [1:6] "LeTicia" "Dan" "Magnus" "Omar" ...
+##  $ What is your gender?               : chr [1:6] "Female" "Male" "Male" "Male" ...
+##  $ What is your age?                  : chr [1:6] "25-34" "25-34" "25-34" "25-34" ...
+##  $ A River Runs Throught It           : chr [1:6] "I haven't seen this movie" "I haven't seen this movie" "3" "I haven't seen this movie" ...
+##  $ Moneyball                          : chr [1:6] "3" "4" "5" "4" ...
+##  $ Ad Astra                           : chr [1:6] "4" "4" "4" "I haven't seen this movie" ...
+##  $ World War Z                        : chr [1:6] "5" "3" "I haven't seen this movie" "4" ...
+##  $ The Curious Case of Benjamin Button: chr [1:6] "5" "I haven't seen this movie" "I haven't seen this movie" "4" ...
+##  $ Spy Game                           : chr [1:6] "I haven't seen this movie" "I haven't seen this movie" "3" "I haven't seen this movie" ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# i think this is because the titles of the movies (header column) didn't have underscores}
+
+\NormalTok{Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{A River Runs Throught It}\StringTok{`}\NormalTok{ <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{A River Runs Throught It}\StringTok{`}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Class_Movie_Survey}\OperatorTok{$}\NormalTok{Moneyball <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\NormalTok{Moneyball)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{Ad Astra}\StringTok{`}\NormalTok{ <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{Ad Astra}\StringTok{`}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{World War Z}\StringTok{`}\NormalTok{ <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{World War Z}\StringTok{`}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{The Curious Case of Benjamin Button}\StringTok{`}\NormalTok{ <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{The Curious Case of Benjamin Button}\StringTok{`}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{Spy Game}\StringTok{`}\NormalTok{ <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{Spy Game}\StringTok{`}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# I am able to force coreciion the types to numeric}
+
+\CommentTok{# are there any missing values here?}
+\KeywordTok{any}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(Class_Movie_Survey)) }\CommentTok{# TRUE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# OK I see that the "I didn't see this movie" can turned into an NA value}
+
+\CommentTok{# how many NA values are there?}
+\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(Class_Movie_Survey)) }\CommentTok{# there are 14 NA values}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 14
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# create a new column that is the sum of the NAs for each respondent}
+\NormalTok{Class_Movie_Survey}\OperatorTok{$}\NormalTok{total_na_count_respondent <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(Class_Movie_Survey, }\DecValTok{1}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(x)))}
+
+
+\CommentTok{# Find the average survey score for each movie remembering to remove NA / "I haven't seen this movie" values before creating an average }
+
+\NormalTok{Average_Score_A_River_Runs_Throught_It <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{A River Runs Throught It}\StringTok{`}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{nrow}\NormalTok{(Class_Movie_Survey) }\OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{A River Runs Throught It}\StringTok{`}\NormalTok{)))}
+
+\NormalTok{Average_Score_Moneyball <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\NormalTok{Moneyball,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{ ) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{nrow}\NormalTok{(Class_Movie_Survey) }\OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\NormalTok{Moneyball)))}
+
+\NormalTok{Average_Score_Ad_Astra <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{Ad Astra}\StringTok{`}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{nrow}\NormalTok{(Class_Movie_Survey) }\OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{Ad Astra}\StringTok{`}\NormalTok{)))}
+
+\NormalTok{Average_Score_World_War_Z <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{World War Z}\StringTok{`}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{nrow}\NormalTok{(Class_Movie_Survey) }\OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{World War Z}\StringTok{`}\NormalTok{)))}
+
+\NormalTok{Average_Score_The_Curious_Case_of_Benjamin_Button <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{The Curious Case of Benjamin Button}\StringTok{`}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{nrow}\NormalTok{(Class_Movie_Survey) }\OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{The Curious Case of Benjamin Button}\StringTok{`}\NormalTok{)))}
+
+\NormalTok{Average_Score_Spy_Game <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{Spy Game}\StringTok{`}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{nrow}\NormalTok{(Class_Movie_Survey) }\OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(Class_Movie_Survey}\OperatorTok{$}\StringTok{`}\DataTypeTok{Spy Game}\StringTok{`}\NormalTok{)))}
+
+\CommentTok{# Create a data frame for our movies + survey scores}
+\NormalTok{SurveyScoreDateFrame <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"Movies"}\NormalTok{ =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"A River Runs Throught It"}\NormalTok{, }\StringTok{"Moneyball"}\NormalTok{, }\StringTok{"Ad Astra"}\NormalTok{, }\StringTok{"World War Z"}\NormalTok{, }\StringTok{"Benjamin Button"}\NormalTok{, }\StringTok{"Spy Game"}\NormalTok{), }\StringTok{"Average Survey Score"}\NormalTok{ =}\StringTok{ }\KeywordTok{c}\NormalTok{(Average_Score_A_River_Runs_Throught_It, Average_Score_Moneyball, Average_Score_Ad_Astra, Average_Score_World_War_Z, Average_Score_The_Curious_Case_of_Benjamin_Button, Average_Score_Spy_Game))}
+                          
+\CommentTok{# Find the IMDB score for each movie (using google searches and creating variables)}
+\NormalTok{IMDB_Score_A_River_Runs_Throught_It <-}\StringTok{ }\FloatTok{7.2}
+\NormalTok{IMDB_Score_Moneyball <-}\StringTok{ }\FloatTok{7.6}
+\NormalTok{IMDB_Score_Ad_Astra <-}\StringTok{ }\FloatTok{6.6}
+\NormalTok{IMDB_Score_World_War_Z <-}\StringTok{ }\DecValTok{7}
+\NormalTok{IMDB_Score_The_Curious_Case_of_Benjamin_Button <-}\StringTok{ }\FloatTok{7.8}
+\NormalTok{IMDB_Score_Spy_Game <-}\StringTok{ }\FloatTok{7.1}
+
+
+\CommentTok{# Divide each IMDB score by 2 because we scored our movies on a 5-point scale}
+\NormalTok{IMDB_Score_A_River_Runs_Throught_It <-}\StringTok{ }\NormalTok{IMDB_Score_A_River_Runs_Throught_It }\OperatorTok{/}\StringTok{ }\DecValTok{2}
+\NormalTok{IMDB_Score_Moneyball <-}\StringTok{ }\NormalTok{IMDB_Score_Moneyball }\OperatorTok{/}\StringTok{ }\DecValTok{2}
+\NormalTok{IMDB_Score_Ad_Astra <-}\StringTok{ }\NormalTok{IMDB_Score_Ad_Astra }\OperatorTok{/}\StringTok{ }\DecValTok{2}
+\NormalTok{IMDB_Score_World_War_Z <-}\StringTok{ }\NormalTok{IMDB_Score_World_War_Z }\OperatorTok{/}\StringTok{ }\DecValTok{2}
+\NormalTok{IMDB_Score_The_Curious_Case_of_Benjamin_Button <-}\StringTok{ }\NormalTok{IMDB_Score_The_Curious_Case_of_Benjamin_Button }\OperatorTok{/}\StringTok{ }\DecValTok{2}
+\NormalTok{IMDB_Score_Spy_Game <-}\StringTok{ }\NormalTok{IMDB_Score_Spy_Game }\OperatorTok{/}\StringTok{ }\DecValTok{2}
+
+
+\CommentTok{# Create a vecotr of IMDB Scores}
+\NormalTok{IMDB_Scores_Vector <-}\StringTok{ }\KeywordTok{c}\NormalTok{(IMDB_Score_A_River_Runs_Throught_It, IMDB_Score_Moneyball, IMDB_Score_Ad_Astra, IMDB_Score_World_War_Z, IMDB_Score_The_Curious_Case_of_Benjamin_Button, IMDB_Score_Spy_Game)}
+                          
+\NormalTok{SurveyScoreDateFrame}\OperatorTok{$}\NormalTok{IMDB_Scores <-}\StringTok{ }\NormalTok{IMDB_Scores_Vector}
+
+\CommentTok{# in order to graph we need a long data frame instead of a wide one}
+
+\KeywordTok{library}\NormalTok{(tidyr)}
+
+\NormalTok{long_data_SurveyScoreDateFrame <-}\StringTok{ }\KeywordTok{gather}\NormalTok{(SurveyScoreDateFrame, SurveyScoreDateFrame.Average.Survey.Score, IMDB_Scores, }\OperatorTok{-}\NormalTok{Movies)}
+
+\KeywordTok{colnames}\NormalTok{(long_data_SurveyScoreDateFrame) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Movies"}\NormalTok{, }\StringTok{"Measure"}\NormalTok{, }\StringTok{"Score"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{  long_data_SurveyScoreDateFrame, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Movies, }\DataTypeTok{y =}\NormalTok{ Score, }\DataTypeTok{color =}\NormalTok{ Measure)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Brad Pitt Movies"}\NormalTok{, }\DataTypeTok{subtitle =} \StringTok{"Survey vs. IMDB Scores"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.subtitle =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{hjust =} \FloatTok{0.5}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{caption =} \StringTok{"Week 2 Assignment"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Movie Titles"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\CommentTok{# scale_colour_manual(values = c(Average.Survey.Score = 'turquoise',}
+\StringTok{  }\CommentTok{#                                  IMDB_Scores = 'tan1')) +}
+\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{"#999999"}\NormalTok{, }\StringTok{"#E69F00"}\NormalTok{), }
+                       \DataTypeTok{name=}\StringTok{"Source"}\NormalTok{,}
+                       \DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"Survey"}\NormalTok{, }\StringTok{"IMDB"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data607_JW_Homework_2_files/figure-latex/R - Visualizing-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{ylab}\NormalTok{(}\StringTok{"Score"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $y
+## [1] "Score"
+## 
+## attr(,"class")
+## [1] "labels"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \CommentTok{# scale_y_discrete(limits=c("1","2","3", "4", "5"))}
+\end{Highlighting}
+\end{Shaded}
+
+My conclusion here is that the class survey graders are either more
+generous graders of movies in generally, or else our class is made up of
+bigger fans of Brad Pitt than our movie critics.
+
+\end{document}
